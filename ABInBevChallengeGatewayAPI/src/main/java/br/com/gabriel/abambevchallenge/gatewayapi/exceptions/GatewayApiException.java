@@ -1,11 +1,11 @@
-package br.com.gabriel.abambevchallenge.authorization.exceptions;
+package br.com.gabriel.abambevchallenge.gatewayapi.exceptions;
 
-public class AuthorizationException extends Exception {
-    private static final long serialVersionUID = -4326782360792839304L;
+public class GatewayApiException extends Exception {
+    private static final long serialVersionUID = 3894383291307303379L;
     private final String code;
     private final String message;
 
-    public AuthorizationException(String code, String message) {
+    public GatewayApiException(String code, String message) {
         super();
         this.code = code;
         this.message = message;
