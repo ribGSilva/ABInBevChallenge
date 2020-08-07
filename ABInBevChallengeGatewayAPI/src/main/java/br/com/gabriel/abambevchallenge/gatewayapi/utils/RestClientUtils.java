@@ -1,6 +1,8 @@
 package br.com.gabriel.abambevchallenge.gatewayapi.utils;
 
 import org.springframework.http.*;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 public class RestClientUtils {
@@ -11,6 +13,14 @@ public class RestClientUtils {
 
     public RestClientUtils() {
         this.rest = new RestTemplate();
+        this.rest.setErrorHandler(new ResponseErrorHandler() {
+            @Override
+            public boolean hasError(ClientHttpResponse clientHttpResponse){
+                return false;
+            }
+            @Override
+            public void handleError(ClientHttpResponse clientHttpResponse) {}
+        });
         this.headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
         headers.add("Accept", "*/*");
@@ -30,16 +40,18 @@ public class RestClientUtils {
         return responseEntity.getBody();
     }
 
-    public void put(String host, String uri, String json) {
+    public String put(String host, String uri, String json) {
         HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
         ResponseEntity<String> responseEntity = rest.exchange(host + uri, HttpMethod.PUT, requestEntity, String.class);
         this.setStatus(responseEntity.getStatusCode());
+        return responseEntity.getBody();
     }
 
-    public void delete(String host, String uri, String json) {
+    public String delete(String host, String uri, String json) {
         HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
         ResponseEntity<String> responseEntity = rest.exchange(host + uri, HttpMethod.DELETE, requestEntity, String.class);
         this.setStatus(responseEntity.getStatusCode());
+        return responseEntity.getBody();
     }
 
     public HttpStatus getStatus() {

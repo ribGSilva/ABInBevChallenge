@@ -20,26 +20,21 @@ public class AuthorizationService {
 
     public ClientCredentialsTO createClient(CreateClientCredentialsDTO createClientCredentialsDTO) throws GatewayApiException {
         ClientCredentialsTO clientCredentialsTO;
-        try {
-            RestClientUtils restClientUtils = new RestClientUtils();
-            JSONObject bodyRequest = new JSONObject();
-            bodyRequest.put("clientSecret", createClientCredentialsDTO.getClient_secret());
-            String response = restClientUtils.post(ConfigConstants.AUTHORIZATION_ADDRESS, "clientcredentials/", bodyRequest.toString());
-            HttpStatus status = restClientUtils.getStatus();
+        RestClientUtils restClientUtils = new RestClientUtils();
+        JSONObject bodyRequest = new JSONObject();
+        bodyRequest.put("clientSecret", createClientCredentialsDTO.getClient_secret());
+        String response = restClientUtils.post(ConfigConstants.AUTHORIZATION_ADDRESS, "clientcredentials/", bodyRequest.toString());
+        HttpStatus status = restClientUtils.getStatus();
 
-            if (HttpStatus.OK.equals(status)) {
-                JSONObject responseJson = new JSONObject(response);
-                clientCredentialsTO = new ClientCredentialsTO();
-                clientCredentialsTO.setGrant_type(CLIENT_CREDENTIALS_GRANT_TYPE);
-                clientCredentialsTO.setClient_id(responseJson.getString("clientId"));
-                clientCredentialsTO.setClient_secret(responseJson.getString("clientSecret"));
-            } else if (HttpStatus.BAD_REQUEST.equals(status)) {
-                throw ExceptionUtils.createException(new JSONObject(response));
-            } else {
-                throw ExceptionUtils.createException(ExceptionEnum.INTERNAL_ERROR);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (HttpStatus.OK.equals(status)) {
+            JSONObject responseJson = new JSONObject(response);
+            clientCredentialsTO = new ClientCredentialsTO();
+            clientCredentialsTO.setGrant_type(CLIENT_CREDENTIALS_GRANT_TYPE);
+            clientCredentialsTO.setClient_id(responseJson.getString("clientId"));
+            clientCredentialsTO.setClient_secret(responseJson.getString("clientSecret"));
+        } else if (HttpStatus.BAD_REQUEST.equals(status)) {
+            throw ExceptionUtils.createException(new JSONObject(response));
+        } else {
             throw ExceptionUtils.createException(ExceptionEnum.INTERNAL_ERROR);
         }
         return clientCredentialsTO;
@@ -51,23 +46,23 @@ public class AuthorizationService {
         if (!CLIENT_CREDENTIALS_GRANT_TYPE.equals(grantType)) {
             throw ExceptionUtils.createException(ExceptionEnum.GRANT_TYPE_NOT_SUPPORTED);
         }
-        try {
-            RestClientUtils restClientUtils = new RestClientUtils();
-            JSONObject requestJson = new JSONObject();
-            requestJson.put("clientId", clientId);
-            requestJson.put("clientSecret", clientSecret);
-            String body = restClientUtils.post(ConfigConstants.AUTHORIZATION_ADDRESS, "clientcredentials/token", requestJson.toString());
-            HttpStatus status = restClientUtils.getStatus();
+        RestClientUtils restClientUtils = new RestClientUtils();
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("clientId", clientId);
+        requestJson.put("clientSecret", clientSecret);
+        String body = restClientUtils.post(ConfigConstants.AUTHORIZATION_ADDRESS, "clientcredentials/token", requestJson.toString());
+        HttpStatus status = restClientUtils.getStatus();
 
-            if (HttpStatus.OK.equals(status)) {
+        if (HttpStatus.OK.equals(status)) {
+            try {
                 tokenTO = new ObjectMapper().readValue(body, TokenTO.class);
-            } else if (HttpStatus.BAD_REQUEST.equals(status)) {
-                throw ExceptionUtils.createException(new JSONObject(body));
-            } else {
+            } catch (Exception e) {
+                e.printStackTrace();
                 throw ExceptionUtils.createException(ExceptionEnum.INTERNAL_ERROR);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else if (HttpStatus.BAD_REQUEST.equals(status)) {
+            throw ExceptionUtils.createException(new JSONObject(body));
+        } else {
             throw ExceptionUtils.createException(ExceptionEnum.INTERNAL_ERROR);
         }
 
@@ -75,19 +70,14 @@ public class AuthorizationService {
     }
 
     public void validateToken(String token) throws GatewayApiException {
-        try {
-            RestClientUtils restClientUtils = new RestClientUtils();
-            String body = restClientUtils.get(ConfigConstants.AUTHORIZATION_ADDRESS, "validate/" + token);
-            HttpStatus status = restClientUtils.getStatus();
+        RestClientUtils restClientUtils = new RestClientUtils();
+        String body = restClientUtils.get(ConfigConstants.AUTHORIZATION_ADDRESS, "clientcredentials/validate/" + token);
+        HttpStatus status = restClientUtils.getStatus();
 
-            if (HttpStatus.OK.equals(status)) {
-            } else if (HttpStatus.BAD_REQUEST.equals(status)) {
-                throw ExceptionUtils.createException(new JSONObject(body));
-            } else {
-                throw ExceptionUtils.createException(ExceptionEnum.INTERNAL_ERROR);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (HttpStatus.OK.equals(status)) {
+        } else if (HttpStatus.BAD_REQUEST.equals(status)) {
+            throw ExceptionUtils.createException(new JSONObject(body));
+        } else {
             throw ExceptionUtils.createException(ExceptionEnum.INTERNAL_ERROR);
         }
     }

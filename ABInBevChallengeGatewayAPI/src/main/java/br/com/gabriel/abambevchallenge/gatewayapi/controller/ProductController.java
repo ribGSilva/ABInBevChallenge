@@ -1,11 +1,11 @@
-package br.com.gabriel.abambevchallenge.product.controller;
+package br.com.gabriel.abambevchallenge.gatewayapi.controller;
 
-import br.com.gabriel.abambevchallenge.product.beans.dto.CreateProductDTO;
-import br.com.gabriel.abambevchallenge.product.beans.dto.ErrorDTO;
-import br.com.gabriel.abambevchallenge.product.beans.dto.IdDTO;
-import br.com.gabriel.abambevchallenge.product.beans.to.ProductTO;
-import br.com.gabriel.abambevchallenge.product.exceptions.ProductException;
-import br.com.gabriel.abambevchallenge.product.service.ProductService;
+import br.com.gabriel.abambevchallenge.gatewayapi.beans.dto.CreateProductDTO;
+import br.com.gabriel.abambevchallenge.gatewayapi.beans.dto.ErrorDTO;
+import br.com.gabriel.abambevchallenge.gatewayapi.beans.dto.IdDTO;
+import br.com.gabriel.abambevchallenge.gatewayapi.beans.to.ProductTO;
+import br.com.gabriel.abambevchallenge.gatewayapi.exceptions.GatewayApiException;
+import br.com.gabriel.abambevchallenge.gatewayapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
+@RequestMapping("product")
 public class ProductController {
 
     @Autowired
@@ -40,8 +40,8 @@ public class ProductController {
         ResponseEntity<?> responseEntity;
         try {
             ProductTO product = productService.findId(id);
-            responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
-        } catch (ProductException e) {
+            responseEntity = new ResponseEntity<>(product, HttpStatus.BAD_REQUEST);
+        } catch (GatewayApiException e) {
             ErrorDTO errorDTO = new ErrorDTO() {{
                 setCode(e.getCode());
                 setMessage(e.getMessage());
@@ -60,7 +60,7 @@ public class ProductController {
         try {
             ProductTO product = productService.findByName(name);
             responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
-        } catch (ProductException e) {
+        } catch (GatewayApiException e) {
             ErrorDTO errorDTO = new ErrorDTO() {{
                 setCode(e.getCode());
                 setMessage(e.getMessage());
@@ -77,12 +77,9 @@ public class ProductController {
     public ResponseEntity<?> create(@RequestBody CreateProductDTO createProductDTO) {
         ResponseEntity<?> responseEntity;
         try {
-            String id = productService.create(createProductDTO);
-            IdDTO idDTO = new IdDTO() {{
-                setId(id);
-            }};
-            responseEntity = new ResponseEntity<>(idDTO, HttpStatus.OK);
-        } catch (ProductException e) {
+            IdDTO idDTO = productService.create(createProductDTO);
+            responseEntity = new ResponseEntity<>(idDTO, HttpStatus.CREATED);
+        } catch (GatewayApiException e) {
             ErrorDTO errorDTO = new ErrorDTO() {{
                 setCode(e.getCode());
                 setMessage(e.getMessage());
@@ -101,7 +98,7 @@ public class ProductController {
         try {
             productService.update(id, createProductDTO);
             responseEntity = new ResponseEntity<>(HttpStatus.OK);
-        } catch (ProductException e) {
+        } catch (GatewayApiException e) {
             ErrorDTO errorDTO = new ErrorDTO() {{
                 setCode(e.getCode());
                 setMessage(e.getMessage());
