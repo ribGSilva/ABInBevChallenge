@@ -1,6 +1,10 @@
 package br.com.gabriel.abambevchallenge.product.beans.dto;
 
-public class IdDTO {
+import java.io.Serializable;
+
+public class IdDTO implements Serializable {
+    private static final long serialVersionUID = 6720021558267501163L;
+
     private String id;
 
     public String getId() {

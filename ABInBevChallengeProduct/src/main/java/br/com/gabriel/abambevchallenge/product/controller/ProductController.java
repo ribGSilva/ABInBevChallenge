@@ -74,7 +74,7 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> create(@Validated @RequestBody CreateProductDTO createProductDTO) {
+    public ResponseEntity<?> create(@RequestBody CreateProductDTO createProductDTO) {
         ResponseEntity<?> responseEntity;
         try {
             String id = productService.create(createProductDTO);

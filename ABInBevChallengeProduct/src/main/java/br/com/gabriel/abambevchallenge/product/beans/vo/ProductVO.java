@@ -5,8 +5,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.io.Serializable;
+
 @Document(collection = "product")
-public class ProductVO {
+public class ProductVO implements Serializable {
+    private static final long serialVersionUID = -3875552657327329874L;
 
     @MongoId
     private String id;
