@@ -17,3 +17,4 @@ Some configurations were mocked on utils.ConfigConstants to get a faster develop
         - Token Expiration Time
         ....
 
+All microservices are pointed to localhost
