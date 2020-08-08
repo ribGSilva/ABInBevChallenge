@@ -30,7 +30,7 @@ public class ProductValidator {
         try {
             new BigDecimal(createProductDTO.getPrice());
         } catch (Exception e) {
-            throw ExceptionUtils.createException(ExceptionEnum.FIELD_REQUIRED, "price");
+            throw ExceptionUtils.createException(ExceptionEnum.FIELD_INVALID, "price");
         }
     }
 }

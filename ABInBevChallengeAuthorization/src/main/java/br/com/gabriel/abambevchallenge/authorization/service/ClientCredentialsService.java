@@ -22,6 +22,7 @@ import java.util.UUID;
 @Service
 public class ClientCredentialsService {
 
+    public static final String TOKEN_TYPE_BEARER = "Bearer";
     @Autowired
     private CreateClientCredentialsTokenValidator createClientCredentialsTokenValidator;
 
@@ -73,6 +74,7 @@ public class ClientCredentialsService {
             }
             String token = jwtService.create(clientCredentialsVO.getClientId(), ConfigConstants.TOKEN_EXPIRATION_TIME);
             tokenTO = new TokenTO() {{
+                setType(TOKEN_TYPE_BEARER);
                 setToken(token);
                 setExpires(ConfigConstants.TOKEN_EXPIRATION_TIME);
             }};

@@ -54,12 +54,11 @@ public class AuthorizationService {
         HttpStatus status = restClientUtils.getStatus();
 
         if (HttpStatus.OK.equals(status)) {
-            try {
-                tokenTO = new ObjectMapper().readValue(body, TokenTO.class);
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw ExceptionUtils.createException(ExceptionEnum.INTERNAL_ERROR);
-            }
+            JSONObject responseJson = new JSONObject(body);
+            tokenTO = new TokenTO();
+            tokenTO.setAccess_token(responseJson.getString("token"));
+            tokenTO.setToken_type(responseJson.getString("type"));
+            tokenTO.setExpires_in(responseJson.getLong("expires"));
         } else if (HttpStatus.BAD_REQUEST.equals(status)) {
             throw ExceptionUtils.createException(new JSONObject(body));
         } else {

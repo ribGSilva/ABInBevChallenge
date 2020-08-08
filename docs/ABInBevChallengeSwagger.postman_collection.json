@@ -1,0 +1,31 @@
+{
+	"info": {
+		"_postman_id": "0a0e1583-9c75-4618-9502-7159a55fc6ac",
+		"name": "ABInBevChallengeSwagger",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SwaggerJSON",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/gatewayapi/v2/api-docs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"gatewayapi",
+						"v2",
+						"api-docs"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

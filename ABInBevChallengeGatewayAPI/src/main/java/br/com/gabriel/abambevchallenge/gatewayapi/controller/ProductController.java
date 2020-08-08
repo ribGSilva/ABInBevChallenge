@@ -54,7 +54,7 @@ public class ProductController {
         ResponseEntity<?> responseEntity;
         try {
             ProductTO product = productService.findId(id);
-            responseEntity = new ResponseEntity<>(product, HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(product, HttpStatus.OK);
         } catch (GatewayApiException e) {
             ErrorDTO errorDTO = new ErrorDTO() {{
                 setCode(e.getCode());
@@ -102,7 +102,7 @@ public class ProductController {
         ResponseEntity<?> responseEntity;
         try {
             IdDTO idDTO = productService.create(createProductDTO);
-            responseEntity = new ResponseEntity<>(idDTO, HttpStatus.CREATED);
+            responseEntity = new ResponseEntity<>(idDTO, HttpStatus.OK);
         } catch (GatewayApiException e) {
             ErrorDTO errorDTO = new ErrorDTO() {{
                 setCode(e.getCode());
