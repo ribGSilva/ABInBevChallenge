@@ -3,12 +3,18 @@ services:
   authorization:
     build: ./ABInBevChallengeAuthorization/
     image: authorization:1.0
+    ports:
+      - "8001:8001"
     network_mode: host
   product:
     build: ./ABInBevChallengeProduct/
     image: product:1.0
+    ports:
+      - "8000:8000"
     network_mode: host
   gatewayapi:
     build: ./ABInBevChallengeGatewayAPI/
     image: gatewayapi:1.0
+    ports:
+      - "9000:9000"
     network_mode: host

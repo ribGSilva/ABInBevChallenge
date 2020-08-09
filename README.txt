@@ -7,7 +7,10 @@ Authorization Header -> use only access_key
 
 MongoDB Credentials -> 
         - Url connection on application.properties of the microservices
-        - Default: mongodb://user:pass@localhost:27017
+                - Default: mongodb://user:pass@localhost:27017
+        - Databases:
+                - authorization
+                - product
 
 Autorization -> Port 8001
 Product -> Port 8000
