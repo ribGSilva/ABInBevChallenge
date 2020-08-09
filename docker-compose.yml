@@ -1,0 +1,14 @@
+version: '3'
+services:
+  authorization:
+    build: ./ABInBevChallengeAuthorization/
+    image: authorization:1.0
+    network_mode: host
+  product:
+    build: ./ABInBevChallengeProduct/
+    image: product:1.0
+    network_mode: host
+  gatewayapi:
+    build: ./ABInBevChallengeGatewayAPI/
+    image: gatewayapi:1.0
+    network_mode: host

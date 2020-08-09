@@ -20,5 +20,3 @@ Some configurations were mocked on utils.ConfigConstants to get a faster develop
         ....
 
 All microservices are pointed to localhost
-
-I had some troubles with network on the containers, so i had to create some .sh to automate the deploy.
