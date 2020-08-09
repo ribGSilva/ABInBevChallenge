@@ -118,7 +118,7 @@
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"    var jsonData = pm.response.json();\r",
-									"    pm.expect(jsonData.token_type).to.eql(\"bearer\");\r",
+									"    pm.expect(jsonData.token_type).to.eql(\"Bearer\");\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -148,9 +148,7 @@
 								}
 							],
 							"options": {
-								"raw": {
-									"language": "json"
-								}
+								"urlencoded": {}
 							}
 						},
 						"url": {
@@ -210,9 +208,7 @@
 								}
 							],
 							"options": {
-								"raw": {
-									"language": "json"
-								}
+								"urlencoded": {}
 							}
 						},
 						"url": {
@@ -272,9 +268,7 @@
 								}
 							],
 							"options": {
-								"raw": {
-									"language": "json"
-								}
+								"urlencoded": {}
 							}
 						},
 						"url": {
@@ -334,9 +328,7 @@
 								}
 							],
 							"options": {
-								"raw": {
-									"language": "json"
-								}
+								"urlencoded": {}
 							}
 						},
 						"url": {
@@ -396,9 +388,7 @@
 								}
 							],
 							"options": {
-								"raw": {
-									"language": "json"
-								}
+								"urlencoded": {}
 							}
 						},
 						"url": {
@@ -458,9 +448,7 @@
 								}
 							],
 							"options": {
-								"raw": {
-									"language": "json"
-								}
+								"urlencoded": {}
 							}
 						},
 						"url": {
@@ -520,9 +508,7 @@
 								}
 							],
 							"options": {
-								"raw": {
-									"language": "json"
-								}
+								"urlencoded": {}
 							}
 						},
 						"url": {
